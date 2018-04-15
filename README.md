@@ -29,7 +29,7 @@ To Install:<br />
 • Download software listed above.<br />
 • Clone the repo onto your local device.<br />
 • Create build files using CMAKE onto your local device (in a folder separate from the cloned repo folder).<br />
-• Run solution file in Visual Studio and compile.
+• Run solution file in Visual Studio and compile.<br />
 <br />
 To Contribute:<br />
 • Send a request to @40210041 for access and wait for reply.<br />
@@ -38,4 +38,4 @@ To Contribute:<br />
 • Create a pull request for commit to be merged into the master branch.
 
 # Acknowledgements
-• 
+•
