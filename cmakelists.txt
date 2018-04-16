@@ -28,7 +28,19 @@ link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 ##################
 # veg_def build  #
 ##################
-file(GLOB_RECURSE SOURCES veg_def/*.cpp/*.h)
-add_executable(veg_def ${SOURCES})
-target_include_directories(veg_def PRIVATE ${SFML_INCS})
-target_link_libraries(veg_def sfml-graphics)
+file(GLOB_RECURSE SOURCES game/*.cpp game/*.h)
+add_executable(VEG_DEF ${SOURCES})
+target_include_directories(VEG_DEF PRIVATE ${SFML_INCS})
+target_link_libraries(VEG_DEF sfml-graphics)
+add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND}
+  -E copy_directory
+    "${PROJECT_SOURCE_DIR}/res"
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res
+)
+set_target_properties(
+  VEG_DEF PROPERTIES
+  VS_DEBUGGER_WORKING_DIRECTORY
+  ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
+)
+
+add_dependencies(VEG_DEF copy_resources)

@@ -1,0 +1,118 @@
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include "ship.h"
+#include "game.h"
+
+using namespace sf;
+using namespace std;
+
+sf::Texture spritesheet;
+sf::Sprite invader;
+std::vector<Ship *> ships;
+
+void Load()
+{
+  // check if spreitesheet exists
+  if (!spritesheet.loadFromFile("res/img/invaders_sheet.png"))
+  {
+    cerr << "Failed to load spritesheet!" << std::endl;
+  }
+
+  auto rectTowerFriendly = IntRect(50, 1900, 200, 300);
+  // set the position of the unit
+  Vector2f positionTowerFriendly = {50, (gameHeight - 400)};
+  auto towerFriendly = new Invader(rectTowerFriendly, positionTowerFriendly);
+  ships.push_back(towerFriendly);
+
+  auto rectTowerEnemy = IntRect(380, 1900, 200, 300);
+  // set the position of the unit
+  Vector2f positionTowerEnemy = {(gameWidth - 200), (gameHeight - 400)};
+  auto towerEnemy = new Invader(rectTowerEnemy, positionTowerEnemy);
+  ships.push_back(towerEnemy);
+}
+
+void CreateCarrot()
+{
+  auto rectNewUnit1 = IntRect(50, 50, 200, 200);
+  // set the position of the unit
+  Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
+  auto newUnit1 = new Ally(rectNewUnit1, positionNewUnit1);
+  ships.push_back(newUnit1);
+}
+void CreateTomato()
+{
+  auto rectNewUnit1 = IntRect(50, 370, 200, 200);
+  // set the position of the unit
+  Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
+  auto newUnit1 = new Ally(rectNewUnit1, positionNewUnit1);
+  ships.push_back(newUnit1);
+}
+void CreatePear()
+{
+  auto rectNewUnit1 = IntRect(50, 690, 200, 200);
+  // set the position of the unit
+  Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
+  auto newUnit1 = new Ally(rectNewUnit1, positionNewUnit1);
+  ships.push_back(newUnit1);
+}
+
+void Update(RenderWindow &window)
+{
+  // reset clock, recalculate deltatime
+  static Clock clock;
+  float dt = clock.restart().asSeconds();
+  // check and consume events
+  Event event;
+  while (window.pollEvent(event))
+  {
+    if (event.type == Event::Closed)
+    {
+      window.close();
+      return;
+    }
+  }
+
+  for (auto &s : ships)
+  {
+    s->Update(dt);
+  }
+
+  // number keys
+  if (Keyboard::isKeyPressed(Keyboard::Num1)) {
+    CreateCarrot();
+  }
+  if (Keyboard::isKeyPressed(Keyboard::Num2)) {
+    CreateTomato();
+  }
+  if (Keyboard::isKeyPressed(Keyboard::Num3)) {
+    CreatePear();
+  }
+
+  // quit via ESC key
+  if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+    window.close();
+  }
+}
+
+void Render(RenderWindow &window)
+{
+  window.draw(invader);
+
+  for (const auto s : ships)
+  {
+    window.draw(*s);
+  }
+}
+
+int main()
+{
+  RenderWindow window(VideoMode(gameWidth, gameHeight), "SPACE INVADERS");
+  Load();
+  while(window.isOpen()){
+    window.clear();
+    Update(window);
+    Render(window);
+    window.display();
+  }
+  return 0;
+}
