@@ -27,26 +27,70 @@ public:
   void Update(const float &dt) override;
 };
 
-class Ally : public Ship
+class AllyCarrot : public Ship
 {
 public:
   static int health;
   static int damage;
   static bool direction;
   static float speed;
-  Ally(sf::IntRect ir, sf::Vector2f pos);
-  Ally();
+  AllyCarrot(sf::IntRect ir, sf::Vector2f pos);
+  AllyCarrot();
+  void Update(const float &dt) override;
+};
+class AllyTomato : public Ship
+{
+public:
+  static int health;
+  static int damage;
+  static bool direction;
+  static float speed;
+  AllyTomato(sf::IntRect ir, sf::Vector2f pos);
+  AllyTomato();
+  void Update(const float &dt) override;
+};
+class AllyPear : public Ship
+{
+public:
+  static int health;
+  static int damage;
+  static bool direction;
+  static float speed;
+  AllyPear(sf::IntRect ir, sf::Vector2f pos);
+  AllyPear();
   void Update(const float &dt) override;
 };
 
-class Enemy : public Ship
+class EnemyDonut : public Ship
 {
 public:
   static int health;
   static int damage;
   static bool direction;
   static float speed;
-  Enemy(sf::IntRect ir, sf::Vector2f pos);
-  Enemy();
+  EnemyDonut(sf::IntRect ir, sf::Vector2f pos);
+  EnemyDonut();
+  void Update(const float &dt) override;
+};
+class EnemyChocolate : public Ship
+{
+public:
+  static int health;
+  static int damage;
+  static bool direction;
+  static float speed;
+  EnemyChocolate(sf::IntRect ir, sf::Vector2f pos);
+  EnemyChocolate();
+  void Update(const float &dt) override;
+};
+class EnemyHotdog : public Ship
+{
+public:
+  static int health;
+  static int damage;
+  static bool direction;
+  static float speed;
+  EnemyHotdog(sf::IntRect ir, sf::Vector2f pos);
+  EnemyHotdog();
   void Update(const float &dt) override;
 };

@@ -34,8 +34,6 @@ void Base::Update(const float &dt)
 {
   Ship::Update(dt);
 
-  //move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
-
   if ((direction && getPosition().x > gameWidth - 16) ||
     (!direction && getPosition().x < 16))
     {
@@ -49,23 +47,103 @@ void Base::Update(const float &dt)
     }
 }
 
-Ally::Ally() : Ship() {}
+//carrot class
+AllyCarrot::AllyCarrot() : Ship() {}
 
-bool Ally::direction = 20;
-float Ally::speed = 20;
+bool AllyCarrot::direction = 20;
+float AllyCarrot::speed = 80;
 
-Ally::Ally(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+AllyCarrot::AllyCarrot(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
 }
 
-void Ally::Update(const float &dt)
+void AllyCarrot::Update(const float &dt)
 {
   Ship::Update(dt);
 
   move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
 
+  if ((direction && getPosition().x > gameWidth - 300) ||
+    (!direction && getPosition().x < 16))
+    {
+      // change direction
+      speed = 0;
+    }
+}
+
+
+//tomato class
+AllyTomato::AllyTomato() : Ship() {}
+
+bool AllyTomato::direction = 20;
+float AllyTomato::speed = 80;
+
+AllyTomato::AllyTomato(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+{
+  setOrigin(16, 16);
+  setPosition(pos);
+}
+
+void AllyTomato::Update(const float &dt)
+{
+  Ship::Update(dt);
+
+  move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
+
+  if ((direction && getPosition().x > gameWidth - 300) ||
+    (!direction && getPosition().x < 16))
+    {
+      // change direction
+      speed = 0;
+    }
+}
+
+//pear class
+AllyPear::AllyPear() : Ship() {}
+
+bool AllyPear::direction = 20;
+float AllyPear::speed = 80;
+
+AllyPear::AllyPear(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+{
+  setOrigin(16, 16);
+  setPosition(pos);
+}
+
+void AllyPear::Update(const float &dt)
+{
+  Ship::Update(dt);
+
+  move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
+
+  if ((direction && getPosition().x > gameWidth - 300) ||
+    (!direction && getPosition().x < 16))
+    {
+      // change direction
+      speed = 0;
+    }
+}
+
+//donut class
+EnemyDonut::EnemyDonut() : Ship() {}
+
+bool EnemyDonut::direction = 20;
+float EnemyDonut::speed = 80;
+
+EnemyDonut::EnemyDonut(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+{
+  setOrigin(16, 16);
+  setPosition(pos);
+}
+
+void EnemyDonut::Update(const float &dt)
+{
+  Ship::Update(dt);
+
+  move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
+
   if ((direction && getPosition().x > gameWidth - 16) ||
     (!direction && getPosition().x < 16))
     {
@@ -79,18 +157,52 @@ void Ally::Update(const float &dt)
     }
 }
 
-Enemy::Enemy() : Ship() {}
 
-bool Enemy::direction = 20;
-float Enemy::speed = 20;
+//donut class
+EnemyChocolate::EnemyChocolate() : Ship() {}
 
-Enemy::Enemy(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+bool EnemyChocolate::direction = 20;
+float EnemyChocolate::speed = 80;
+
+EnemyChocolate::EnemyChocolate(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
 }
 
-void Enemy::Update(const float &dt)
+void EnemyChocolate::Update(const float &dt)
+{
+  Ship::Update(dt);
+
+  move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
+
+  if ((direction && getPosition().x > gameWidth - 16) ||
+    (!direction && getPosition().x < 16))
+    {
+      // change direction
+      direction = !direction;
+      for (int i = 0; i < ships.size(); i++)
+      {
+        // moves ships down 24 pixels
+        ships[i]->move(0, 24);
+      }
+    }
+}
+
+
+//donut class
+EnemyHotdog::EnemyHotdog() : Ship() {}
+
+bool EnemyHotdog::direction = 20;
+float EnemyHotdog::speed = 80;
+
+EnemyHotdog::EnemyHotdog(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+{
+  setOrigin(16, 16);
+  setPosition(pos);
+}
+
+void EnemyHotdog::Update(const float &dt)
 {
   Ship::Update(dt);
 

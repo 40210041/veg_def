@@ -36,7 +36,7 @@ void CreateCarrot()
   auto rectNewUnit1 = IntRect(50, 50, 200, 200);
   // set the position of the unit
   Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
-  auto newUnit1 = new Ally(rectNewUnit1, positionNewUnit1);
+  auto newUnit1 = new AllyCarrot(rectNewUnit1, positionNewUnit1);
   ships.push_back(newUnit1);
 }
 void CreateTomato()
@@ -44,7 +44,7 @@ void CreateTomato()
   auto rectNewUnit1 = IntRect(50, 370, 200, 200);
   // set the position of the unit
   Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
-  auto newUnit1 = new Ally(rectNewUnit1, positionNewUnit1);
+  auto newUnit1 = new AllyTomato(rectNewUnit1, positionNewUnit1);
   ships.push_back(newUnit1);
 }
 void CreatePear()
@@ -52,7 +52,7 @@ void CreatePear()
   auto rectNewUnit1 = IntRect(50, 690, 200, 200);
   // set the position of the unit
   Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
-  auto newUnit1 = new Ally(rectNewUnit1, positionNewUnit1);
+  auto newUnit1 = new AllyPear(rectNewUnit1, positionNewUnit1);
   ships.push_back(newUnit1);
 }
 
@@ -61,7 +61,7 @@ void CreateDonut()
   auto rectNewUnit1 = IntRect(50, 980, 200, 200);
   // set the position of the unit
   Vector2f positionNewUnit1 = {(gameWidth - 100), (gameHeight - 270)};
-  auto newUnit1 = new Enemy(rectNewUnit1, positionNewUnit1);
+  auto newUnit1 = new EnemyDonut(rectNewUnit1, positionNewUnit1);
   ships.push_back(newUnit1);
 }
 void CreateChocolate()
@@ -69,7 +69,7 @@ void CreateChocolate()
   auto rectNewUnit1 = IntRect(50, 1310, 200, 200);
   // set the position of the unit
   Vector2f positionNewUnit1 = {(gameWidth - 100), (gameHeight - 270)};
-  auto newUnit1 = new Enemy(rectNewUnit1, positionNewUnit1);
+  auto newUnit1 = new EnemyChocolate(rectNewUnit1, positionNewUnit1);
   ships.push_back(newUnit1);
 }
 void CreateHotdog()
@@ -77,7 +77,7 @@ void CreateHotdog()
   auto rectNewUnit1 = IntRect(50, 1630, 200, 200);
   // set the position of the unit
   Vector2f positionNewUnit1 = {(gameWidth - 100), (gameHeight - 270)};
-  auto newUnit1 = new Enemy(rectNewUnit1, positionNewUnit1);
+  auto newUnit1 = new EnemyHotdog(rectNewUnit1, positionNewUnit1);
   ships.push_back(newUnit1);
 }
 
@@ -114,13 +114,22 @@ void Update(RenderWindow &window)
   }
   // number keys
   if (Keyboard::isKeyPressed(Keyboard::Num8)) {
-    CreateChocolate();
+    CreateDonut();
   }
   if (Keyboard::isKeyPressed(Keyboard::Num9)) {
-    CreateDonut();
+    CreateChocolate();
   }
   if (Keyboard::isKeyPressed(Keyboard::Num0)) {
     CreateHotdog();
+  }
+
+  // calculate ally collision
+  const float ally_x = invader.getPosition().x;
+  const float ally_y = invader.getPosition().y;
+
+  if (ally_x > (gameWidth - 400))
+  {
+    window.close();
   }
 
   // quit via ESC key
