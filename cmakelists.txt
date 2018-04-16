@@ -1,4 +1,4 @@
-#cmakelist.txt
+#cmakelists.txt
 
 #minimum version
 cmake_minimum_required(VERSION 3.9)
