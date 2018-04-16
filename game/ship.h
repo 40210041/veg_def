@@ -16,22 +16,37 @@ public:
   virtual void Update(const float &dt);
 };
 
-class Invader : public Ship
+class Base : public Ship
 {
 public:
+  static int health;
   static bool direction;
   static float speed;
-  Invader(sf::IntRect ir, sf::Vector2f pos);
-  Invader();
+  Base(sf::IntRect ir, sf::Vector2f pos);
+  Base();
   void Update(const float &dt) override;
 };
 
 class Ally : public Ship
 {
 public:
+  static int health;
+  static int damage;
   static bool direction;
   static float speed;
   Ally(sf::IntRect ir, sf::Vector2f pos);
   Ally();
+  void Update(const float &dt) override;
+};
+
+class Enemy : public Ship
+{
+public:
+  static int health;
+  static int damage;
+  static bool direction;
+  static float speed;
+  Enemy(sf::IntRect ir, sf::Vector2f pos);
+  Enemy();
   void Update(const float &dt) override;
 };

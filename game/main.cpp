@@ -21,13 +21,13 @@ void Load()
   auto rectTowerFriendly = IntRect(50, 1900, 200, 300);
   // set the position of the unit
   Vector2f positionTowerFriendly = {50, (gameHeight - 400)};
-  auto towerFriendly = new Invader(rectTowerFriendly, positionTowerFriendly);
+  auto towerFriendly = new Base(rectTowerFriendly, positionTowerFriendly);
   ships.push_back(towerFriendly);
 
   auto rectTowerEnemy = IntRect(380, 1900, 200, 300);
   // set the position of the unit
   Vector2f positionTowerEnemy = {(gameWidth - 200), (gameHeight - 400)};
-  auto towerEnemy = new Invader(rectTowerEnemy, positionTowerEnemy);
+  auto towerEnemy = new Base(rectTowerEnemy, positionTowerEnemy);
   ships.push_back(towerEnemy);
 }
 
@@ -53,6 +53,31 @@ void CreatePear()
   // set the position of the unit
   Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
   auto newUnit1 = new Ally(rectNewUnit1, positionNewUnit1);
+  ships.push_back(newUnit1);
+}
+
+void CreateDonut()
+{
+  auto rectNewUnit1 = IntRect(50, 980, 200, 200);
+  // set the position of the unit
+  Vector2f positionNewUnit1 = {(gameWidth - 100), (gameHeight - 270)};
+  auto newUnit1 = new Enemy(rectNewUnit1, positionNewUnit1);
+  ships.push_back(newUnit1);
+}
+void CreateChocolate()
+{
+  auto rectNewUnit1 = IntRect(50, 1310, 200, 200);
+  // set the position of the unit
+  Vector2f positionNewUnit1 = {(gameWidth - 100), (gameHeight - 270)};
+  auto newUnit1 = new Enemy(rectNewUnit1, positionNewUnit1);
+  ships.push_back(newUnit1);
+}
+void CreateHotdog()
+{
+  auto rectNewUnit1 = IntRect(50, 1630, 200, 200);
+  // set the position of the unit
+  Vector2f positionNewUnit1 = {(gameWidth - 100), (gameHeight - 270)};
+  auto newUnit1 = new Enemy(rectNewUnit1, positionNewUnit1);
   ships.push_back(newUnit1);
 }
 
@@ -86,6 +111,16 @@ void Update(RenderWindow &window)
   }
   if (Keyboard::isKeyPressed(Keyboard::Num3)) {
     CreatePear();
+  }
+  // number keys
+  if (Keyboard::isKeyPressed(Keyboard::Num8)) {
+    CreateChocolate();
+  }
+  if (Keyboard::isKeyPressed(Keyboard::Num9)) {
+    CreateDonut();
+  }
+  if (Keyboard::isKeyPressed(Keyboard::Num0)) {
+    CreateHotdog();
   }
 
   // quit via ESC key
