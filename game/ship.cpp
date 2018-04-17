@@ -19,39 +19,46 @@ void Ship::Update(const float &dt) {}
 // although we est this to pure virtual, we still have to define it
 Ship::~Ship() = default;
 
-Base::Base() : Ship() {}
+//ally base
+AllyBase::AllyBase() : Ship() {}
+int AllyBase::health = 20;
+bool AllyBase::direction = 20;
+float AllyBase::speed = 20;
 
-bool Base::direction = 20;
-float Base::speed = 20;
-
-Base::Base(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+AllyBase::AllyBase(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
 }
 
-void Base::Update(const float &dt)
+void AllyBase::Update(const float &dt)
 {
   Ship::Update(dt);
 
-  if ((direction && getPosition().x > gameWidth - 16) ||
-    (!direction && getPosition().x < 16))
-    {
-      // change direction
-      direction = !direction;
-      for (int i = 0; i < ships.size(); i++)
-      {
-        // moves ships down 24 pixels
-        ships[i]->move(0, 24);
-      }
-    }
+}
+
+//enemy base
+EnemyBase::EnemyBase() : Ship() {}
+int EnemyBase::health = 20;
+bool EnemyBase::direction = 20;
+float EnemyBase::speed = 20;
+
+EnemyBase::EnemyBase(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+{
+  setOrigin(16, 16);
+  setPosition(pos);
+}
+
+void EnemyBase::Update(const float &dt)
+{
+  Ship::Update(dt);
 }
 
 //carrot class
 AllyCarrot::AllyCarrot() : Ship() {}
 
 bool AllyCarrot::direction = 20;
-float AllyCarrot::speed = 80;
+float AllyCarrot::speed = 280;
 
 AllyCarrot::AllyCarrot(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 {
@@ -144,16 +151,11 @@ void EnemyDonut::Update(const float &dt)
 
   move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
 
-  if ((direction && getPosition().x > gameWidth - 16) ||
+  if ((direction && getPosition().x < 150) ||
     (!direction && getPosition().x < 16))
     {
       // change direction
-      direction = !direction;
-      for (int i = 0; i < ships.size(); i++)
-      {
-        // moves ships down 24 pixels
-        ships[i]->move(0, 24);
-      }
+      speed = 0;
     }
 }
 
@@ -176,16 +178,11 @@ void EnemyChocolate::Update(const float &dt)
 
   move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
 
-  if ((direction && getPosition().x > gameWidth - 16) ||
+  if ((direction && getPosition().x < 150) ||
     (!direction && getPosition().x < 16))
     {
       // change direction
-      direction = !direction;
-      for (int i = 0; i < ships.size(); i++)
-      {
-        // moves ships down 24 pixels
-        ships[i]->move(0, 24);
-      }
+      speed = 0;
     }
 }
 
@@ -208,15 +205,10 @@ void EnemyHotdog::Update(const float &dt)
 
   move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
 
-  if ((direction && getPosition().x > gameWidth - 16) ||
+  if ((direction && getPosition().x < 150) ||
     (!direction && getPosition().x < 16))
     {
       // change direction
-      direction = !direction;
-      for (int i = 0; i < ships.size(); i++)
-      {
-        // moves ships down 24 pixels
-        ships[i]->move(0, 24);
-      }
+      speed = 0;
     }
 }
