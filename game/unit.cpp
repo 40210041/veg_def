@@ -1,31 +1,31 @@
-#include "ship.h"
+#include "unit.h"
 #include "game.h"
 
 using namespace sf;
 using namespace std;
 
-Ship::Ship() {};
+Unit::Unit() {};
 
-Ship::Ship(IntRect ir) : Sprite()
+Unit::Unit(IntRect ir) : Sprite()
 {
   _sprite = ir;
   setTexture(spritesheet);
   setTextureRect(_sprite);
 };
 
-void Ship::Update(const float &dt) {}
+void Unit::Update(const float &dt) {}
 
-// define the ship deconstructor
+// define the unit deconstructor
 // although we est this to pure virtual, we still have to define it
-Ship::~Ship() = default;
+Unit::~Unit() = default;
 
 //ally base
-AllyBase::AllyBase() : Ship() {}
+AllyBase::AllyBase() : Unit() {}
 int AllyBase::health = 20;
 bool AllyBase::direction = 20;
 float AllyBase::speed = 20;
 
-AllyBase::AllyBase(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+AllyBase::AllyBase(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -33,17 +33,18 @@ AllyBase::AllyBase(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void AllyBase::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
 
 }
 
 //enemy base
-EnemyBase::EnemyBase() : Ship() {}
+EnemyBase::EnemyBase() : Unit() {}
 int EnemyBase::health = 20;
+int EnemyBase::new_health;
 bool EnemyBase::direction = 20;
 float EnemyBase::speed = 20;
 
-EnemyBase::EnemyBase(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+EnemyBase::EnemyBase(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -51,16 +52,21 @@ EnemyBase::EnemyBase(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void EnemyBase::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
+  if (AllyCarrot::collided == true){
+    new_health = (health - 20);
+    health = new_health;
+	printf("I have no health now!!");
+  }
 }
 
 //carrot class
-AllyCarrot::AllyCarrot() : Ship() {}
-
+AllyCarrot::AllyCarrot() : Unit() {}
+bool AllyCarrot::collided = false;
 bool AllyCarrot::direction = 20;
-float AllyCarrot::speed = 280;
+float AllyCarrot::speed = 100;
 
-AllyCarrot::AllyCarrot(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+AllyCarrot::AllyCarrot(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -68,7 +74,7 @@ AllyCarrot::AllyCarrot(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void AllyCarrot::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
 
   move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
 
@@ -77,17 +83,21 @@ void AllyCarrot::Update(const float &dt)
     {
       // change direction
       speed = 0;
+      collided = true;
+      if (collided == true){
+       // printf("I have collided!\n");
+      }
     }
 }
 
 
 //tomato class
-AllyTomato::AllyTomato() : Ship() {}
+AllyTomato::AllyTomato() : Unit() {}
 
 bool AllyTomato::direction = 20;
 float AllyTomato::speed = 80;
 
-AllyTomato::AllyTomato(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+AllyTomato::AllyTomato(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -95,7 +105,7 @@ AllyTomato::AllyTomato(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void AllyTomato::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
 
   move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
 
@@ -108,12 +118,12 @@ void AllyTomato::Update(const float &dt)
 }
 
 //pear class
-AllyPear::AllyPear() : Ship() {}
+AllyPear::AllyPear() : Unit() {}
 
 bool AllyPear::direction = 20;
 float AllyPear::speed = 80;
 
-AllyPear::AllyPear(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+AllyPear::AllyPear(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -121,7 +131,7 @@ AllyPear::AllyPear(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void AllyPear::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
 
   move(dt * (direction ? 1.0f : -1.0f) * speed, 0);
 
@@ -134,12 +144,12 @@ void AllyPear::Update(const float &dt)
 }
 
 //donut class
-EnemyDonut::EnemyDonut() : Ship() {}
+EnemyDonut::EnemyDonut() : Unit() {}
 
 bool EnemyDonut::direction = 20;
 float EnemyDonut::speed = 80;
 
-EnemyDonut::EnemyDonut(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+EnemyDonut::EnemyDonut(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -147,7 +157,7 @@ EnemyDonut::EnemyDonut(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void EnemyDonut::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
 
   move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
 
@@ -161,12 +171,12 @@ void EnemyDonut::Update(const float &dt)
 
 
 //donut class
-EnemyChocolate::EnemyChocolate() : Ship() {}
+EnemyChocolate::EnemyChocolate() : Unit() {}
 
 bool EnemyChocolate::direction = 20;
 float EnemyChocolate::speed = 80;
 
-EnemyChocolate::EnemyChocolate(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+EnemyChocolate::EnemyChocolate(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -174,7 +184,7 @@ EnemyChocolate::EnemyChocolate(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void EnemyChocolate::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
 
   move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
 
@@ -188,12 +198,12 @@ void EnemyChocolate::Update(const float &dt)
 
 
 //donut class
-EnemyHotdog::EnemyHotdog() : Ship() {}
+EnemyHotdog::EnemyHotdog() : Unit() {}
 
 bool EnemyHotdog::direction = 20;
 float EnemyHotdog::speed = 80;
 
-EnemyHotdog::EnemyHotdog(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
+EnemyHotdog::EnemyHotdog(sf::IntRect ir, sf::Vector2f pos) : Unit(ir)
 {
   setOrigin(16, 16);
   setPosition(pos);
@@ -201,7 +211,7 @@ EnemyHotdog::EnemyHotdog(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 
 void EnemyHotdog::Update(const float &dt)
 {
-  Ship::Update(dt);
+  Unit::Update(dt);
 
   move(dt * (direction ? -1.0f : 1.0f) * speed, 0);
 

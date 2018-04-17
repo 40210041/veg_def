@@ -1,14 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "ship.h"
+#include "unit.h"
 #include "game.h"
 
 using namespace sf;
 using namespace std;
 
 sf::Texture spritesheet;
-sf::Sprite invader;
-std::vector<Ship *> ships;
+sf::Sprite character;
+std::vector<Unit *> units;
 
 //create "boolean" ints, 0 = available, 1 = used
 int carrotSent = 0;
@@ -21,7 +21,7 @@ int hotdogSent = 0;
 void Load()
 {
   // check if spreitesheet exists
-  if (!spritesheet.loadFromFile("res/img/invaders_sheet.png"))
+  if (!spritesheet.loadFromFile("res/img/units_sheet.png"))
   {
     cerr << "Failed to load spritesheet!" << std::endl;
   }
@@ -30,13 +30,13 @@ void Load()
   // set the position of the unit
   Vector2f positionTowerFriendly = {50, (gameHeight - 400)};
   auto towerFriendly = new AllyBase(rectTowerFriendly, positionTowerFriendly);
-  ships.push_back(towerFriendly);
+  units.push_back(towerFriendly);
 
   auto rectTowerEnemy = IntRect(380, 1900, 200, 300);
   // set the position of the unit
   Vector2f positionTowerEnemy = {(gameWidth - 200), (gameHeight - 400)};
   auto towerEnemy = new EnemyBase(rectTowerEnemy, positionTowerEnemy);
-  ships.push_back(towerEnemy);
+  units.push_back(towerEnemy);
 }
 
 
@@ -47,7 +47,7 @@ void CreateCarrot()
   // set the position of the unit
   Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
   auto newUnit1 = new AllyCarrot(rectNewUnit1, positionNewUnit1);
-  ships.push_back(newUnit1);
+  units.push_back(newUnit1);
 }
 void CreateTomato()
 {
@@ -56,7 +56,7 @@ void CreateTomato()
   // set the position of the unit
   Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
   auto newUnit1 = new AllyTomato(rectNewUnit1, positionNewUnit1);
-  ships.push_back(newUnit1);
+  units.push_back(newUnit1);
 }
 void CreatePear()
 {
@@ -65,7 +65,7 @@ void CreatePear()
   // set the position of the unit
   Vector2f positionNewUnit1 = {70, (gameHeight - 270)};
   auto newUnit1 = new AllyPear(rectNewUnit1, positionNewUnit1);
-  ships.push_back(newUnit1);
+  units.push_back(newUnit1);
 }
 
 void CreateDonut()
@@ -75,7 +75,7 @@ void CreateDonut()
   // set the position of the unit
   Vector2f positionNewUnit1 = {(gameWidth - 200), (gameHeight - 270)};
   auto newUnit1 = new EnemyDonut(rectNewUnit1, positionNewUnit1);
-  ships.push_back(newUnit1);
+  units.push_back(newUnit1);
 }
 void CreateChocolate()
 {
@@ -84,7 +84,7 @@ void CreateChocolate()
   // set the position of the unit
   Vector2f positionNewUnit1 = {(gameWidth - 200), (gameHeight - 270)};
   auto newUnit1 = new EnemyChocolate(rectNewUnit1, positionNewUnit1);
-  ships.push_back(newUnit1);
+  units.push_back(newUnit1);
 }
 void CreateHotdog()
 {
@@ -93,7 +93,7 @@ void CreateHotdog()
   // set the position of the unit
   Vector2f positionNewUnit1 = {(gameWidth - 200), (gameHeight - 270)};
   auto newUnit1 = new EnemyHotdog(rectNewUnit1, positionNewUnit1);
-  ships.push_back(newUnit1);
+  units.push_back(newUnit1);
 }
 
 void Update(RenderWindow &window)
@@ -112,7 +112,7 @@ void Update(RenderWindow &window)
     }
   }
 
-  for (auto &s : ships)
+  for (auto &s : units)
   {
     s->Update(dt);
   }
@@ -125,7 +125,10 @@ void Update(RenderWindow &window)
     else if (carrotSent == 0){
         CreateCarrot();
     }
+    if (AllyCarrot::collided == true){
+      window.close();
     }
+  }
 
   if (Keyboard::isKeyPressed(Keyboard::Num2)) {
     if (tomatoSent == 1){
@@ -179,8 +182,8 @@ void Update(RenderWindow &window)
 
 void Render(RenderWindow &window)
 {
-  window.draw(invader);
-  for (const auto s : ships)
+  window.draw(character);
+  for (const auto s : units)
   {
     window.draw(*s);
   }

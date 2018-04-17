@@ -1,23 +1,23 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Ship : public sf::Sprite
+class Unit : public sf::Sprite
 {
 protected:
   sf::IntRect _sprite;
   // default constructor is hidden
-  Ship();
+  Unit();
 public:
   // constructor that takes a sprite
-  explicit Ship(sf::IntRect ir);
+  explicit Unit(sf::IntRect ir);
   // pure virtual deconstructor -- makes this an abstract class
-  virtual ~Ship() = 0;
+  virtual ~Unit() = 0;
   // update virtual so can be overrided, but not pure virtual
   virtual void Update(const float &dt);
 };
 
 //base class
-class AllyBase : public Ship
+class AllyBase : public Unit
 {
 public:
   static int health;
@@ -28,33 +28,34 @@ public:
   void Update(const float &dt) override;
 };
 
-class EnemyBase : public Ship
+class EnemyBase : public Unit
 {
 public:
   static int health;
   static bool direction;
   static float speed;
+  static int new_health;
   EnemyBase(sf::IntRect ir, sf::Vector2f pos);
   EnemyBase();
   void Update(const float &dt) override;
 };
 
 //carrot class
-class AllyCarrot : public Ship
+class AllyCarrot : public Unit
 {
 public:
   static int health;
   static int damage;
   static bool direction;
   static float speed;
-  bool carrotSent = 0;
+  static bool collided;
   AllyCarrot(sf::IntRect ir, sf::Vector2f pos);
   AllyCarrot();
   void Update(const float &dt) override;
 };
 
 //tomato class
-class AllyTomato : public Ship
+class AllyTomato : public Unit
 {
 public:
   static int health;
@@ -67,7 +68,7 @@ public:
 };
 
 //pear class
-class AllyPear : public Ship
+class AllyPear : public Unit
 {
 public:
   static int health;
@@ -80,7 +81,7 @@ public:
 };
 
 //donut class
-class EnemyDonut : public Ship
+class EnemyDonut : public Unit
 {
 public:
   static int health;
@@ -93,7 +94,7 @@ public:
 };
 
 //chocolate class
-class EnemyChocolate : public Ship
+class EnemyChocolate : public Unit
 {
 public:
   static int health;
@@ -106,7 +107,7 @@ public:
 };
 
 //hotdog class
-class EnemyHotdog : public Ship
+class EnemyHotdog : public Unit
 {
 public:
   static int health;
